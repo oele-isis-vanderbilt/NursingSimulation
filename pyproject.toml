@@ -14,7 +14,8 @@ classifiers = [
 
 dependencies = [
     'chimerapy-orchestrator',
-    'chimerapy-engine'
+    'chimerapy-engine',
+    'chimerapy-pipelines',
 ]
 
 [project.optional-dependencies]

@@ -1,0 +1,49 @@
+{
+  "mode": "preview",
+  "workers": {
+    "manager_ip": "129.59.104.153",
+    "manager_port": 9001,
+    "instances": [
+      {
+        "name": "local",
+        "id": "local",
+        "description": "local worker for the MMLA pipeline demo with a video node"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "registry_name": "CPPipelines_ScreenCapture",
+      "name": "screen-capture",
+      "kwargs": {
+        "monitor": 2,
+        "scale": 0.5,
+        "fps": 30,
+        "save_name": "times-square-live"
+      },
+      "package": "chimerapy-pipelines"
+    },
+    {
+      "registry_name": "CPPipelines_ShowWindows",
+      "name": "show",
+      "kwargs": {},
+      "package": "chimerapy-pipelines"
+    }
+  ],
+  "adj": [
+    [
+      "screen-capture",
+      "show"
+    ]
+  ],
+  "manager_config": {
+    "logdir": "cp-logs",
+    "port": 9001
+  },
+  "mappings": {
+    "local": [
+      "screen-capture",
+      "show"
+    ]
+  }
+}
