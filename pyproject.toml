@@ -1,0 +1,74 @@
+[project]
+name = "nursing-simulation"
+version = "0.0.0"
+description = "Nursing Simulation: ChimeraPy Nodes and Pipelines for a Nursing Simulation Project at OELE"
+license = {file = "LICENSE"}
+readme = "README.md"
+requires-python = ">3.6"
+
+keywords = ["education", "multimodal", "data", "learning", "analytics"]
+
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+
+dependencies = [
+    'chimerapy-orchestrator',
+    'chimerapy-engine'
+]
+
+[project.optional-dependencies]
+test = [
+    'ruff',
+    'pre-commit',
+]
+
+[project.urls]
+homepath = "https://github.com/oele-isis-vanderbilt/NursingSimulation.git"
+documentation = "https://github.com/oele-isis-vanderbilt/NursingSimulation.git"
+repository = "https://github.com/oele-isis-vanderbilt/NursingSimulation.git"
+
+
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# https://setuptools.pypa.io/en/stable/userguide/datafiles.html
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+chimerapy = ['nursing_simulation/**/*.json']
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+ignore = ["E501"]
+select = ["E", "W", "F", "C", "B", "I"]
+ignore-init-module-imports = true
+fixable = ["I001"]  # isort fix only
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F401", "E402"]
+
+
+[project.entry-points."chimerapy.orchestrator.nodes_registry"]
+get_nodes_registry = "nursing_simulation:register_nodes_metadata"
+
+# Reference:
+# https://stackoverflow.com/questions/4673373/logging-within-pytest-tests
+[tool.pytest.ini_options]
+
+# Logging + CLI
+log_cli = true
+log_cli_level = "DEBUG"
+log_cli_format = "%(asctime)s.%(msecs)03d [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+# Timeout
+faulthandler_timeout=300
+
+# Ignore warnings
+filterwarnings = "ignore::DeprecationWarning"
