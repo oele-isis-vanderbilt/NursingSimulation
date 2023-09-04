@@ -13,15 +13,18 @@ classifiers = [
 ]
 
 dependencies = [
-    'chimerapy-orchestrator',
-    'chimerapy-engine',
-    'chimerapy-pipelines',
+    "chimerapy-orchestrator",
+    "chimerapy-engine",
+    "chimerapy-pipelines",
+    "fastapi[all]",
+    "uvicorn[standard]",
+    "opencv-python"
 ]
 
 [project.optional-dependencies]
 test = [
-    'ruff',
-    'pre-commit',
+    "ruff",
+    "pre-commit",
 ]
 
 [project.urls]

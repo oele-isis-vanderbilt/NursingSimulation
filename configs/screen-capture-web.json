@@ -7,7 +7,7 @@
       {
         "name": "local",
         "id": "local",
-        "description": "local worker for the MMLA pipeline demo with a video node"
+        "description": "local worker for NursingSimulation Project"
       }
     ]
   },
@@ -25,16 +25,21 @@
       "package": "chimerapy-pipelines"
     },
     {
-      "registry_name": "CPPipelines_ShowWindows",
-      "name": "show",
-      "kwargs": {},
-      "package": "chimerapy-pipelines"
+      "registry_name": "NursingSimulation_FastAPIVideoNode",
+      "name": "fastapi-show",
+      "kwargs": {
+        "static_dir_path": "static",
+        "frame_key": "frame",
+        "port": 8000,
+        "name": "fastapi-show"
+      },
+      "package": "nursing-simulation"
     }
   ],
   "adj": [
     [
       "screen-capture",
-      "show"
+      "fastapi-show"
     ]
   ],
   "manager_config": {
@@ -44,7 +49,7 @@
   "mappings": {
     "local": [
       "screen-capture",
-      "show"
+      "fastapi-show"
     ]
   }
 }
