@@ -2,23 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script>
+    <title>WebRTC Screen Sharing Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-    </script>
+        header, main, footer {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        video {
+            width: 80%;
+            border: 1px solid #ddd;
+        }
+
+        footer {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Website Title</h1>
+        <h1>WebRTC Screen Sharing Example</h1>
     </header>
 
     <main>
         <!-- Main content goes here -->
-        <img src="/video-feed/screen-capture"/>
+        <button id="start-sharing">Start</button>
+        <button id="stop-sharing">Stop</button>
+        <video id="screenVideo" controls autoplay></video>
     </main>
 
     <footer>
         <p>Copyright © 2023</p>
     </footer>
+    <script src="client.js"></script>
 </body>
 </html>

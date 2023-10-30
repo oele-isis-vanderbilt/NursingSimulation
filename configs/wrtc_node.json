@@ -1,0 +1,42 @@
+{
+  "mode": "record",
+  "workers": {
+    "manager_ip": "129.59.104.153",
+    "manager_port": 9001,
+    "instances": [
+      {
+        "name": "local",
+        "id": "local",
+        "description": "local worker for the MMLA pipeline demo with a video node"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "registry_name": "NS_WRTC",
+      "name": "screen-capture",
+      "kwargs": {
+        "host": "localhost",
+        "port": 8080,
+        "video_chunk_key": "frame"
+      },
+      "package": "nursing-simulation"
+    }
+  ],
+  "adj": [
+    [
+      "screen-capture",
+      "show"
+    ]
+  ],
+  "manager_config": {
+    "logdir": "cp-logs",
+    "port": 9001
+  },
+  "mappings": {
+    "local": [
+      "screen-capture",
+      "show"
+    ]
+  }
+}

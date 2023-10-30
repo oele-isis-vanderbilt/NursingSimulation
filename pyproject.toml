@@ -16,8 +16,6 @@ dependencies = [
     "chimerapy-orchestrator",
     "chimerapy-engine",
     "chimerapy-pipelines",
-    "fastapi[all]",
-    "uvicorn[standard]",
     "opencv-python"
 ]
 
@@ -32,7 +30,8 @@ homepath = "https://github.com/oele-isis-vanderbilt/NursingSimulation.git"
 documentation = "https://github.com/oele-isis-vanderbilt/NursingSimulation.git"
 repository = "https://github.com/oele-isis-vanderbilt/NursingSimulation.git"
 
-
+[project.scripts]
+ns = "nursing_simulation.__main__:main"
 
 [build-system]
 requires = ["setuptools", "wheel"]
