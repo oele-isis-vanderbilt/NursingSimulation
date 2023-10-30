@@ -1,6 +1,8 @@
 import asyncio
 import json
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, Dict, Union
 
 import numpy as np
 from aiohttp import web
@@ -10,10 +12,16 @@ from aiortc.contrib.media import MediaRelay, MediaStreamTrack
 STATIC_ROOT = Path(__file__).parent.parent / "static"
 
 
+@dataclass
+class WebRTCFrame:
+    kind: str
+    data: Union[np.ndarray, Dict[str, Any]]
+
+
 class VideoFramesArrayTrack(MediaStreamTrack):
     kind = "video"
 
-    def __init__(self, track, on_frame):
+    def __init__(self, track, on_frame) -> None:
         super().__init__()  # don't forget this!
         self.track = track
         self.array = np.random.randint(0, 255, size=(720, 1280, 3), dtype=np.uint8)
@@ -41,10 +49,11 @@ class AudioFramesArrayTrack(MediaStreamTrack):
         if self.on_frame:
             self.on_frame(
                 {
-                    "data": sound,
+                    "sound": sound,
                     "sample_rate": frame.sample_rate,
                     "samp_width": frame.format.bytes,
-                    "channels": frame.layout.channels,
+                    "channels": len(frame.layout.channels),
+                    "num_frames": frame.samples,
                 }
             )
         return frame
@@ -56,16 +65,15 @@ class WebRTCService:
         host: str,
         port: int,
         mode: str = "dev",
-    ):
+    ) -> None:
         self.host = host
         self.port = port
         self.mode = mode
-        self.video_client_queues = set()
-        self.audio_client_queues = set()
+        self.client_queues = set()
         self.video_streaming_track = None
         self.pcs = set()
 
-    def get_app(self):
+    def get_app(self) -> web.Application:
         routes = []
 
         if self.mode == "dev":
@@ -132,29 +140,21 @@ class WebRTCService:
             ),
         )
 
-    async def _close(self) -> web.Response:
-        pass
-
-    async def teardown(self):
+    async def teardown(self) -> None:
         for pc in self.pcs:
             await pc.close()
         self.pcs.clear()
 
-    async def add_video_client(self, queue):
-        self.video_client_queues.add(queue)
+    async def add_client(self, queue) -> None:
+        self.client_queues.add(queue)
 
-    async def remove_video_client(self, queue):
-        self.video_client_queues.discard(queue)
+    async def remove_client(self, queue) -> None:
+        self.client_queues.discard(queue)
 
-    async def add_audio_client(self, queue):
-        self.audio_client_queues.add(queue)
+    def on_audio_frame(self, data) -> None:
+        for queue in self.client_queues:
+            asyncio.create_task(queue.put(WebRTCFrame(kind="audio", data=data)))
 
-    async def remove_audio_client(self, queue):
-        self.audio_client_queues.discard(queue)
-
-    async def on_audio_frame(self, frame):
-        pass
-
-    def on_video_frame(self, frame):
-        for queue in self.video_client_queues:
-            asyncio.create_task(queue.put(frame))
+    def on_video_frame(self, frame: np.ndarray) -> None:
+        for queue in self.client_queues:
+            asyncio.create_task(queue.put(WebRTCFrame(kind="video", data=frame)))

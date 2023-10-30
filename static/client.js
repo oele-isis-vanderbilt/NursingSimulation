@@ -8,7 +8,8 @@ async function captureScreen() {
         },
         audio: {
             echoCancellation: true,
-            sampleRate: 16000
+            sampleRate: 16000,
+            channelCount: 1,
         }
     });
 

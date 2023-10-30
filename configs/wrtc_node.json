@@ -14,7 +14,7 @@
   "nodes": [
     {
       "registry_name": "NS_WRTC",
-      "name": "screen-capture",
+      "name": "screen-audio-capture",
       "kwargs": {
         "host": "localhost",
         "port": 8080,
@@ -23,20 +23,14 @@
       "package": "nursing-simulation"
     }
   ],
-  "adj": [
-    [
-      "screen-capture",
-      "show"
-    ]
-  ],
+  "adj": [],
   "manager_config": {
     "logdir": "cp-logs",
     "port": 9001
   },
   "mappings": {
     "local": [
-      "screen-capture",
-      "show"
+      "screen-audio-capture"
     ]
   }
 }
