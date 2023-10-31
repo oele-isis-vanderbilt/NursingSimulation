@@ -16,7 +16,8 @@ dependencies = [
     "chimerapy-orchestrator",
     "chimerapy-engine",
     "chimerapy-pipelines",
-    "opencv-python"
+    "opencv-python",
+    "rerun-chimerapy-node"
 ]
 
 [project.optional-dependencies]

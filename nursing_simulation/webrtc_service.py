@@ -89,7 +89,7 @@ class WebRTCService:
         )
 
         routes.append(
-            web.post("/close", self._close),
+            web.post("/close", self.teardown),
         )
 
         app = web.Application()

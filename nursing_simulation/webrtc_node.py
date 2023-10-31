@@ -48,6 +48,19 @@ class WebRTCNode(Node):
         try:
             if self.state.fsm == "STOPPED":
                 await self.webrtc_service.remove_client(self.frames_queue)
+                while not self.frames_queue.empty():
+                    wrtc_data = await self.frames_queue.get()
+                    if wrtc_data.kind == "video":
+                        self.save_video(self.video_save_prefix, wrtc_data.data, fps=30)
+                    elif wrtc_data.kind == "audio":
+                        self.save_audio_v2(
+                            name=self.audio_save_prefix,
+                            data=wrtc_data.data["sound"],
+                            channels=wrtc_data.data["channels"],
+                            framerate=wrtc_data.data["sample_rate"],
+                            sampwidth=wrtc_data.data["samp_width"],
+                            nframes=wrtc_data.data["num_frames"],
+                        )
 
             wrtc_data = await asyncio.wait_for(self.frames_queue.get(), timeout=1)
             if wrtc_data.kind == "video":
