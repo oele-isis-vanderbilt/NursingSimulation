@@ -1,6 +1,6 @@
 [project]
 name = "nursing-simulation"
-version = "0.0.0"
+version = "0.0.1"
 description = "Nursing Simulation: ChimeraPy Nodes and Pipelines for a Nursing Simulation Project at OELE"
 license = {file = "LICENSE"}
 readme = "README.md"
@@ -17,7 +17,8 @@ dependencies = [
     "chimerapy-engine",
     "chimerapy-pipelines",
     "opencv-python",
-    "rerun-chimerapy-node"
+    "chimerapy-rerun-node",
+    "aiortc"
 ]
 
 [project.optional-dependencies]

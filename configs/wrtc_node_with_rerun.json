@@ -1,5 +1,6 @@
 {
   "mode": "record",
+  "runtime": 600,
   "workers": {
     "manager_ip": "129.59.104.153",
     "manager_port": 9001,
@@ -21,9 +22,28 @@
         "video_chunk_key": "frame"
       },
       "package": "nursing-simulation"
+    },
+     {
+      "registry_name": "ChimeraPyRerunNode",
+      "name": "rerun-show",
+      "kwargs": {
+        "application_id": "chimerapy-rerun-node",
+        "server_addr": "127.0.0.1:54000",
+        "rerun_mappings": {
+          "frame": {
+            "primitive": true,
+            "type": "Image"
+          }
+        }
+      },
+      "package": "chimerapy-rerun-node"
     }
   ],
   "adj": [
+    [
+      "screen-audio-capture",
+      "rerun-show"
+    ]
   ],
   "manager_config": {
     "logdir": "cp-logs",
@@ -31,7 +51,8 @@
   },
   "mappings": {
     "local": [
-      "screen-audio-capture"
+      "screen-audio-capture",
+      "rerun-show"
     ]
   }
 }
